@@ -59,7 +59,11 @@ export async function fsSet(col, id, data) {
 // ── LIST all documents in a collection ────────────────
 export async function fsGetAll(col) {
   const res = await fetch(`${BASE}/${col}?key=${FIREBASE_API_KEY}`);
-  if (!res.ok) throw new Error(`fsGetAll ${col} → ${res.status}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    console.error(`fsGetAll ${col} → ${res.status}`, err);
+    throw new Error(`fsGetAll ${col} → ${res.status}: ${err?.error?.message ?? ''}`);
+  }
   const json = await res.json();
   return (json.documents || []).map(doc => _fromFields(doc.fields || {}));
 }
