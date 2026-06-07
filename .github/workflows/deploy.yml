@@ -24,10 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Inject Firebase secrets
+      - name: Build firebase.js from template
         run: |
-          sed -i "s|__FIREBASE_API_KEY__|${{ secrets.FIREBASE_API_KEY }}|g" js/firebase.js
-          sed -i "s|__FIREBASE_PROJECT_ID__|${{ secrets.FIREBASE_PROJECT_ID }}|g" js/firebase.js
+          sed "s|__FIREBASE_API_KEY__|${{ secrets.FIREBASE_API_KEY }}|g; s|__FIREBASE_PROJECT_ID__|${{ secrets.FIREBASE_PROJECT_ID }}|g" \
+            js/firebase.template.js > js/firebase.js
           cat js/firebase.js
 
       - uses: actions/configure-pages@v5
