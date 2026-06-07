@@ -5,12 +5,12 @@ import {
 } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey:            'AIzaSyARMZZD-PQjjn3VdYRHIcCQieICRbq7bio',
-  authDomain:        'family-vault-a4705.firebaseapp.com',
-  projectId:         'family-vault-a4705',
-  storageBucket:     'family-vault-a4705.firebasestorage.app',
-  messagingSenderId: '253991738206',
-  appId:             '1:253991738206:web:1a1cc61f9c545bbc614dcf',
+  apiKey:            '__FIREBASE_API_KEY__',
+  authDomain:        '__FIREBASE_AUTH_DOMAIN__',
+  projectId:         '__FIREBASE_PROJECT_ID__',
+  storageBucket:     '__FIREBASE_STORAGE_BUCKET__',
+  messagingSenderId: '__FIREBASE_MESSAGING_SENDER_ID__',
+  appId:             '__FIREBASE_APP_ID__',
 };
 
 const app = initializeApp(firebaseConfig);
