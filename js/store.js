@@ -1,5 +1,6 @@
 import { fsGet, fsSet, fsDelete } from './firestore-api.js';
 import { showToast, downloadJSON } from './utils.js';
+import { buildDefaultVault } from './default-vault.js';
 
 // ── STATE ─────────────────────────────────────────────
 let _vault       = null;
@@ -133,17 +134,4 @@ export async function deleteVault(mobile) {
   try { await fsDelete('vaults', mobile); } catch (_) {}
 }
 
-// ── EMPTY VAULT TEMPLATE ──────────────────────────────
-function _emptyVault(user) {
-  return {
-    config: {
-      title:            user.name + "'s Vault",
-      subtitle:         'Keep this file safe.',
-      emergencyMessage: 'This vault belongs to ' + user.name + ' (' + user.mobile + '). Keep strictly private.',
-    },
-    meta:     { lastUpdated: new Date().toLocaleDateString('en-IN'), createdBy: user.name },
-    sections: [],
-    contacts: [],
-    notes:    [],
-  };
-}
+const _emptyVault = user => buildDefaultVault(user);
