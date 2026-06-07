@@ -1,4 +1,5 @@
 import { fsGet, fsSet, fsDelete } from './firestore-api.js';
+import { encryptVault, decryptVault } from './crypto.js';
 import { showToast, downloadJSON } from './utils.js';
 import { buildDefaultVault } from './default-vault.js';
 
@@ -21,9 +22,17 @@ export const getContact = ci        => _vault?.contacts?.find(c => c.id === ci);
 export async function loadUserVault(user) {
   _currentUser = user;
   try {
-    const data = await fsGet('vaults', user.mobile);
-    _vault = data ?? _emptyVault(user);
-    if (!data) _persistVault();
+    const raw = await fsGet('vaults', user.mobile);
+    if (!raw) {
+      _vault = _emptyVault(user);
+      _persistVault();
+    } else if (raw.iv && raw.data) {
+      _vault = await decryptVault(raw);
+    } else {
+      // Legacy plaintext — re-save encrypted
+      _vault = raw;
+      _persistVault();
+    }
   } catch (e) {
     console.error('loadUserVault:', e);
     _vault = _emptyVault(user);
@@ -34,8 +43,9 @@ export async function loadUserVault(user) {
 // ── PERSIST TO FIRESTORE ──────────────────────────────
 function _persistVault() {
   if (!_currentUser || !_vault) return;
-  fsSet('vaults', _currentUser.mobile, _vault)
-    .catch(e => console.error('_persistVault:', e));
+  encryptVault(_vault)
+    .then(enc => fsSet('vaults', _currentUser.mobile, enc))
+    .catch(e  => console.error('_persistVault:', e));
 }
 
 // ── SYNC DOM → _vault ─────────────────────────────────

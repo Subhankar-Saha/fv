@@ -1,5 +1,6 @@
 import { fsGetAll, fsSet, fsDelete } from './firestore-api.js';
 import { loadUserVault, setCurrentUser, syncFromDOM, markSaved, deleteVault } from './store.js';
+import { deriveKey, clearKey } from './crypto.js';
 import { reRender } from './render.js';
 import { setupEvents } from './events.js';
 import { showToast, esc } from './utils.js';
@@ -58,9 +59,12 @@ export async function unlock() {
     return;
   }
 
-  // Show loading while fetching vault
   const btn = document.querySelector('.lock-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'Loading…'; }
+
+  // Derive encryption key from password before clearing the input
+  await deriveKey(input.value, _selectedUser.mobile);
+  input.value = '';
 
   setCurrentUser(_selectedUser);
   await loadUserVault(_selectedUser);
@@ -79,6 +83,7 @@ export async function unlock() {
 // ── LOCK ──────────────────────────────────────────────
 export function lockVault() {
   syncFromDOM();
+  clearKey();
   document.getElementById('vault').style.display       = 'none';
   document.getElementById('vault-container').innerHTML = '';
   document.getElementById('lock-screen').style.display = 'flex';
