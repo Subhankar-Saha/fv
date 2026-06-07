@@ -1,6 +1,6 @@
 import { db } from './firebase.js';
 import {
-  doc, getDoc, setDoc, deleteDoc,
+  doc, getDoc, getDocFromCache, setDoc, deleteDoc,
 } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js';
 import { showToast, downloadJSON } from './utils.js';
 
@@ -35,9 +35,16 @@ export async function loadUserVault(user) {
         await new Promise(r => setTimeout(r, 1500));
         continue;
       }
+      // Truly offline — fall back to IndexedDB cache
       console.error('loadUserVault:', e);
-      _vault = _emptyVault(user);
-      showToast('Offline — edits will sync when online', 'error');
+      try {
+        const cached = await getDocFromCache(ref);
+        _vault = cached.exists() ? cached.data() : _emptyVault(user);
+        showToast('Offline — showing cached data', 'error');
+      } catch (_) {
+        _vault = _emptyVault(user);
+        showToast('Offline — no cached data found', 'error');
+      }
       return;
     }
   }
