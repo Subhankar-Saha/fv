@@ -1,7 +1,4 @@
-import { db } from './firebase.js';
-import {
-  doc, getDoc, getDocFromCache, setDoc, deleteDoc,
-} from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js';
+import { fsGet, fsSet, fsDelete } from './firestore-api.js';
 import { showToast, downloadJSON } from './utils.js';
 
 // ── STATE ─────────────────────────────────────────────
@@ -22,42 +19,22 @@ export const getContact = ci        => _vault?.contacts?.find(c => c.id === ci);
 // ── LOAD USER VAULT FROM FIRESTORE ────────────────────
 export async function loadUserVault(user) {
   _currentUser = user;
-  const ref = doc(db, 'vaults', user.mobile);
-
-  for (let attempt = 0; attempt < 2; attempt++) {
-    try {
-      const snap = await getDoc(ref);
-      _vault = snap.exists() ? snap.data() : _emptyVault(user);
-      if (!snap.exists()) await _persistVault();
-      return;
-    } catch (e) {
-      if (attempt === 0 && e.code === 'unavailable') {
-        await new Promise(r => setTimeout(r, 1500));
-        continue;
-      }
-      // Truly offline — fall back to IndexedDB cache
-      console.error('loadUserVault:', e);
-      try {
-        const cached = await getDocFromCache(ref);
-        _vault = cached.exists() ? cached.data() : _emptyVault(user);
-        showToast('Offline — showing cached data', 'error');
-      } catch (_) {
-        _vault = _emptyVault(user);
-        showToast('Offline — no cached data found', 'error');
-      }
-      return;
-    }
+  try {
+    const data = await fsGet('vaults', user.mobile);
+    _vault = data ?? _emptyVault(user);
+    if (!data) _persistVault();
+  } catch (e) {
+    console.error('loadUserVault:', e);
+    _vault = _emptyVault(user);
+    showToast('Offline — edits will sync when online', 'error');
   }
 }
 
 // ── PERSIST TO FIRESTORE ──────────────────────────────
-async function _persistVault() {
+function _persistVault() {
   if (!_currentUser || !_vault) return;
-  try {
-    await setDoc(doc(db, 'vaults', _currentUser.mobile), _vault);
-  } catch (e) {
-    console.error('_persistVault:', e);
-  }
+  fsSet('vaults', _currentUser.mobile, _vault)
+    .catch(e => console.error('_persistVault:', e));
 }
 
 // ── SYNC DOM → _vault ─────────────────────────────────
@@ -91,7 +68,7 @@ export function markUnsaved() {
   clearTimeout(_saveTimer);
   _saveTimer = setTimeout(async () => {
     syncFromDOM();
-    await _persistVault();
+    _persistVault();
     _saveTimer = null;
     const d2 = _dot();
     if (d2) d2.style.display = 'none';
@@ -108,7 +85,7 @@ export function markSaved() {
 // ── IMMEDIATE SAVE (used by mutations) ────────────────
 export async function flushSave() {
   syncFromDOM();
-  await _persistVault();
+  _persistVault();
 }
 
 // ── EXPORT CURRENT USER VAULT AS JSON ─────────────────
@@ -139,7 +116,7 @@ export function importJSON(input) {
       const backup = JSON.parse(e.target.result);
       if (!backup.vault) throw new Error('Invalid format');
       _vault = backup.vault;
-      await _persistVault();
+      _persistVault();
       const { reRender } = await import('./render.js');
       reRender();
       showToast('✓ Vault restored from backup', 'success');
@@ -153,7 +130,7 @@ export function importJSON(input) {
 
 // ── DELETE VAULT (used by auth when deleting member) ──
 export async function deleteVault(mobile) {
-  try { await deleteDoc(doc(db, 'vaults', mobile)); } catch (_) {}
+  try { await fsDelete('vaults', mobile); } catch (_) {}
 }
 
 // ── EMPTY VAULT TEMPLATE ──────────────────────────────

@@ -1,7 +1,4 @@
-import { db } from './firebase.js';
-import {
-  doc, getDocs, setDoc, deleteDoc, collection,
-} from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js';
+import { fsGetAll, fsSet, fsDelete } from './firestore-api.js';
 import { loadUserVault, setCurrentUser, syncFromDOM, markSaved, deleteVault } from './store.js';
 import { reRender } from './render.js';
 import { setupEvents } from './events.js';
@@ -24,8 +21,7 @@ export async function loadUsers() {
   const lock    = document.getElementById('lock-screen');
 
   try {
-    const snap = await getDocs(collection(db, 'users'));
-    _users = snap.docs.map(d => d.data());
+    _users = await fsGetAll('users');
   } catch (e) {
     console.error('loadUsers:', e);
     _users = [];
@@ -111,7 +107,7 @@ export async function addUser() {
   try {
     const passwordHash = await hashPwd(pass);
     const newUser      = { mobile, name, avatar, passwordHash };
-    await setDoc(doc(db, 'users', mobile), newUser);
+    await fsSet('users', mobile, newUser);
     _users.push(newUser);
     _renderUserGrid();
     _resetForm();
@@ -128,7 +124,7 @@ export async function addUser() {
 export async function deleteUser(mobile) {
   if (!confirm('Delete member ' + mobile + '? All their vault data will be lost.')) return;
   try {
-    await deleteDoc(doc(db, 'users', mobile));
+    await fsDelete('users', mobile);
     await deleteVault(mobile);
     _users = _users.filter(u => u.mobile !== mobile);
     _renderUserGrid();
