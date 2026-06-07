@@ -1,0 +1,971 @@
+// ════════════════════════════════════════════════════
+//  FAMILY CREDENTIALS VAULT — STYLESHEET
+//  Compile:  sass styles.scss styles.css --style=expanded
+// ════════════════════════════════════════════════════
+
+// ── SCSS VARIABLES (mirror CSS custom properties) ──
+$bg:          #0f1117;
+$surface:     #1a1d27;
+$card:        #20242f;
+$border:      rgba(255, 255, 255, 0.08);
+$border-hover:rgba(255, 255, 255, 0.16);
+$text:        #e8eaf0;
+$muted:       #7a7f94;
+
+$accent:      #5b7fff;
+$accent-dim:  rgba(91,  127, 255, 0.12);
+$green:       #3ecf8e;
+$green-dim:   rgba(62,  207, 142, 0.12);
+$amber:       #f6a623;
+$amber-dim:   rgba(246, 166, 35,  0.10);
+$red:         #ff5c5c;
+$red-dim:     rgba(255, 92,  92,  0.10);
+$teal:        #38bdf8;
+$teal-dim:    rgba(56,  189, 248, 0.10);
+$purple:      #a78bfa;
+$purple-dim:  rgba(167, 139, 250, 0.10);
+$pink:        #f472b6;
+$pink-dim:    rgba(244, 114, 182, 0.10);
+
+// ── MIXINS ──────────────────────────────────────────
+@mixin flex-center {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+}
+
+@mixin flex-row($gap: 8px) {
+  display:     flex;
+  align-items: center;
+  gap:         $gap;
+}
+
+@mixin card-base($radius: 14px) {
+  background:    var(--card);
+  border:        1px solid var(--border);
+  border-radius: $radius;
+  position:      relative;
+  transition:    border-color 0.2s;
+
+  &:hover { border-color: var(--border-hover); }
+}
+
+@mixin icon-box($size: 36px, $radius: 9px) {
+  width:         $size;
+  height:        $size;
+  border-radius: $radius;
+  flex-shrink:   0;
+  @include flex-center;
+  font-size:     16px;
+}
+
+@mixin editable-focus($color: var(--accent)) {
+  outline: none;
+  &:focus { color: $color; }
+}
+
+// ── CSS CUSTOM PROPERTIES ────────────────────────────
+:root {
+  --bg:         #{$bg};
+  --surface:    #{$surface};
+  --card:       #{$card};
+  --border:     #{$border};
+  --border-hover: #{$border-hover};
+  --text:       #{$text};
+  --muted:      #{$muted};
+
+  --accent:     #{$accent};     --accent-dim:  #{$accent-dim};
+  --green:      #{$green};      --green-dim:   #{$green-dim};
+  --amber:      #{$amber};      --amber-dim:   #{$amber-dim};
+  --red:        #{$red};        --red-dim:     #{$red-dim};
+  --teal:       #{$teal};       --teal-dim:    #{$teal-dim};
+  --purple:     #{$purple};     --purple-dim:  #{$purple-dim};
+  --pink:       #{$pink};       --pink-dim:    #{$pink-dim};
+}
+
+// ── RESET ────────────────────────────────────────────
+* {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+}
+
+// ── BASE ─────────────────────────────────────────────
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background:  var(--bg);
+  color:       var(--text);
+  min-height:  100vh;
+  font-size:   15px;
+  line-height: 1.6;
+}
+
+// ════════════════════════════════════════════════════
+//  LOCK SCREEN
+// ════════════════════════════════════════════════════
+#lock-screen {
+  @include flex-center;
+  min-height: 100vh;
+  padding:    2rem;
+}
+
+.lock-box {
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  border-radius: 20px;
+  padding:       3rem 2.5rem;
+  max-width:     420px;
+  width:         100%;
+  text-align:    center;
+
+  h1 {
+    font-size:     22px;
+    font-weight:   600;
+    margin-bottom: 0.4rem;
+  }
+
+  > p {
+    color:         var(--muted);
+    font-size:     14px;
+    margin-bottom: 2rem;
+  }
+
+  input[type="password"] {
+    width:          100%;
+    padding:        12px 16px;
+    background:     var(--card);
+    border:         1px solid var(--border);
+    border-radius:  10px;
+    color:          var(--text);
+    font-size:      16px;
+    outline:        none;
+    margin-bottom:  1rem;
+    text-align:     center;
+    letter-spacing: 4px;
+    transition:     border-color 0.2s;
+
+    &:focus { border-color: var(--accent); }
+  }
+}
+
+// ── Lock screen subtitle ────────────────────────────
+.lock-sub {
+  color:         var(--muted);
+  font-size:     13px;
+  margin-bottom: 1.5rem;
+}
+
+// ── User grid ────────────────────────────────────────
+.user-grid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap:                   10px;
+  margin-bottom:         1.5rem;
+}
+
+.user-card {
+  background:    var(--card);
+  border:        2px solid var(--border);
+  border-radius: 14px;
+  padding:       14px 8px 10px;
+  cursor:        pointer;
+  display:       flex;
+  flex-direction: column;
+  align-items:   center;
+  gap:           6px;
+  transition:    all 0.18s;
+
+  &:hover {
+    border-color: rgba(91, 127, 255, 0.4);
+    background:   rgba(91, 127, 255, 0.06);
+  }
+
+  &.active {
+    border-color: var(--accent);
+    background:   var(--accent-dim);
+    box-shadow:   0 0 0 3px rgba(91, 127, 255, 0.15);
+  }
+}
+
+.user-avatar { font-size: 28px; line-height: 1; }
+.user-name   { font-size: 12px; color: var(--muted); font-weight: 500; }
+.user-card.active .user-name { color: var(--accent); }
+
+// ── Add member ───────────────────────────────────────
+.btn-add-user-toggle {
+  background:    none;
+  border:        1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color:         var(--muted);
+  font-size:     13px;
+  padding:       7px 16px;
+  cursor:        pointer;
+  margin-top:    1.2rem;
+  transition:    all 0.2s;
+  width:         100%;
+
+  &:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+}
+
+#add-user-form {
+  margin-top:    1rem;
+  text-align:    left;
+
+  input[type="text"],
+  input[type="password"] {
+    width:         100%;
+    padding:       10px 14px;
+    background:    var(--bg);
+    border:        1px solid var(--border);
+    border-radius: 8px;
+    color:         var(--text);
+    font-size:     14px;
+    outline:       none;
+    margin-bottom: 8px;
+    transition:    border-color 0.2s;
+
+    &:focus { border-color: var(--accent); }
+  }
+}
+
+.add-user-row {
+  display: flex;
+  gap:     8px;
+
+  .input-emoji {
+    width:      60px !important;
+    flex-shrink: 0;
+    text-align: center;
+    font-size:  20px !important;
+    padding:    8px 4px !important;
+    letter-spacing: 0 !important;
+  }
+}
+
+.add-user-hint {
+  font-size:   11px;
+  color:       var(--muted);
+  margin-top:  8px;
+  line-height: 1.7;
+  text-align:  left;
+
+  code { background: rgba(255,255,255,0.06); padding: 1px 4px; border-radius: 3px; }
+}
+
+// ─────────────────────────────────────────────────────
+.lock-icon {
+  width:         64px;
+  height:        64px;
+  background:    var(--accent-dim);
+  border:        1px solid rgba(91, 127, 255, 0.3);
+  border-radius: 16px;
+  @include flex-center;
+  margin:        0 auto 1.5rem;
+  font-size:     28px;
+}
+
+.lock-btn {
+  width:         100%;
+  padding:       12px;
+  background:    var(--accent);
+  color:         #fff;
+  border:        none;
+  border-radius: 10px;
+  font-size:     15px;
+  font-weight:   600;
+  cursor:        pointer;
+  transition:    opacity 0.2s;
+
+  &:hover { opacity: 0.88; }
+}
+
+.lock-error {
+  color:      var(--red);
+  font-size:  13px;
+  margin-top: 0.8rem;
+  display:    none;
+}
+
+
+// ════════════════════════════════════════════════════
+//  VAULT SHELL
+// ════════════════════════════════════════════════════
+#vault { display: none; }
+
+// ── HEADER ───────────────────────────────────────────
+header {
+  background:    var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding:       1rem 2rem;
+  @include flex-row(12px);
+  justify-content: space-between;
+  position:      sticky;
+  top:           0;
+  z-index:       100;
+  flex-wrap:     wrap;
+
+  h1 { font-size: 17px; font-weight: 600; }
+  p  { font-size: 12px; color: var(--muted); }
+}
+
+.header-left {
+  @include flex-row(12px);
+}
+
+.header-logo {
+  @include icon-box(36px, 10px);
+  background:  var(--accent-dim);
+  border:      1px solid rgba(91, 127, 255, 0.3);
+  font-size:   18px;
+}
+
+.header-actions {
+  @include flex-row(8px);
+  flex-wrap: wrap;
+}
+
+// ── BUTTONS ──────────────────────────────────────────
+.btn-sm {
+  padding:       7px 13px;
+  border-radius: 8px;
+  font-size:     13px;
+  font-weight:   500;
+  cursor:        pointer;
+  border:        1px solid var(--border);
+  background:    var(--card);
+  color:         var(--text);
+  transition:    background 0.15s;
+  white-space:   nowrap;
+
+  &:hover    { background: var(--border-hover); }
+  &.btn-save { background: var(--accent-dim); border-color: rgba(91, 127, 255, 0.3); color: var(--accent); }
+  &.btn-print{ background: var(--green-dim);  border-color: rgba(62, 207, 142, 0.3); color: var(--green);  }
+}
+
+.unsaved-dot {
+  color:     var(--amber);
+  font-size: 10px;
+  cursor:    default;
+}
+
+// ── LAYOUT ───────────────────────────────────────────
+.container {
+  max-width: 980px;
+  margin:    0 auto;
+  padding:   2rem;
+}
+
+// ════════════════════════════════════════════════════
+//  EMERGENCY BANNER
+// ════════════════════════════════════════════════════
+.emergency-banner {
+  background:    rgba(255, 92, 92, 0.08);
+  border:        1px solid rgba(255, 92, 92, 0.25);
+  border-radius: 12px;
+  padding:       1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display:       flex;
+  gap:           12px;
+  align-items:   flex-start;
+
+  .icon {
+    font-size:  20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  h3 {
+    font-size:     14px;
+    font-weight:   600;
+    color:         var(--red);
+    margin-bottom: 4px;
+  }
+
+  p { font-size: 13px; color: var(--muted); }
+}
+
+// ── INSTRUCTIONS BAR ─────────────────────────────────
+.instructions {
+  background:    var(--accent-dim);
+  border:        1px solid rgba(91, 127, 255, 0.2);
+  border-radius: 12px;
+  padding:       0.9rem 1.25rem;
+  margin-bottom: 2rem;
+  font-size:     13px;
+  color:         #93b4ff;
+
+  strong { color: var(--accent); }
+
+  code {
+    background:    rgba(91, 127, 255, 0.2);
+    padding:       1px 5px;
+    border-radius: 4px;
+    font-size:     12px;
+  }
+}
+
+// ════════════════════════════════════════════════════
+//  SECTIONS
+// ════════════════════════════════════════════════════
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  @include flex-row(10px);
+  margin-bottom:  1rem;
+  padding-bottom: 0.6rem;
+  border-bottom:  1px solid var(--border);
+  position:       relative;
+
+  h2 {
+    font-size:   15px;
+    font-weight: 600;
+    flex:        1;
+    @include editable-focus;
+  }
+
+  &:hover {
+    .btn-icon      { opacity: 1; }
+    .color-picker  { opacity: 1; }
+  }
+}
+
+.section-icon {
+  @include icon-box(32px, 8px);
+}
+
+.section-actions {
+  @include flex-row(6px);
+}
+
+.count {
+  font-size:     12px;
+  color:         var(--muted);
+  background:    var(--card);
+  padding:       2px 8px;
+  border-radius: 20px;
+  border:        1px solid var(--border);
+  white-space:   nowrap;
+}
+
+// ════════════════════════════════════════════════════
+//  CREDENTIAL CARDS
+// ════════════════════════════════════════════════════
+.cards-grid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap:                   14px;
+}
+
+.cred-card {
+  @include card-base(14px);
+  padding: 1.1rem 1.25rem;
+
+  &:hover {
+    .btn-icon     { opacity: 1; }
+    .color-picker { opacity: 1; }
+  }
+}
+
+.cred-card-header {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           10px;
+  margin-bottom: 12px;
+}
+
+.cred-avatar {
+  @include icon-box(36px, 9px);
+}
+
+.cred-name {
+  font-size:   14px;
+  font-weight: 600;
+  @include editable-focus;
+}
+
+.cred-type {
+  font-size: 12px;
+  color:     var(--muted);
+  @include editable-focus;
+}
+
+.card-actions {
+  @include flex-row(4px);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+// ── FIELDS ───────────────────────────────────────────
+.cred-fields {
+  display:        flex;
+  flex-direction: column;
+  gap:            7px;
+}
+
+.field-row {
+  display:     flex;
+  align-items: flex-start;
+  gap:         8px;
+  font-size:   13px;
+  position:    relative;
+
+  &:hover .btn-icon { opacity: 1; }
+}
+
+.field-label {
+  color:      var(--muted);
+  min-width:  90px;
+  flex-shrink: 0;
+  padding-top: 2px;
+  font-size:   12px;
+  @include editable-focus(var(--text));
+}
+
+.field-value {
+  color:         var(--text);
+  font-family:   'Courier New', monospace;
+  font-size:     12px;
+  background:    rgba(255, 255, 255, 0.04);
+  padding:       2px 6px;
+  border-radius: 4px;
+  word-break:    break-all;
+  flex:          1;
+  outline:       none;
+  min-height:    20px;
+
+  &:focus {
+    background: rgba(255, 255, 255, 0.08);
+    outline:    1px dashed rgba(91, 127, 255, 0.5);
+  }
+
+  &.highlight {
+    background: var(--accent-dim);
+    color:      #93b4ff;
+
+    &:focus { outline-color: var(--accent); }
+  }
+}
+
+// ════════════════════════════════════════════════════
+//  CONTACTS
+// ════════════════════════════════════════════════════
+.contacts-grid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap:                   12px;
+}
+
+.contact-card {
+  @include card-base(12px);
+  padding:   1rem;
+  font-size: 13px;
+
+  &:hover .btn-icon { opacity: 1; }
+}
+
+.contact-name {
+  font-weight:   600;
+  margin-bottom: 3px;
+  font-size:     14px;
+  @include editable-focus;
+}
+
+.contact-role {
+  color:         var(--muted);
+  font-size:     12px;
+  margin-bottom: 8px;
+  outline:       none;
+}
+
+.contact-detail-row {
+  @include flex-row(4px);
+
+  &:hover .btn-icon { opacity: 1; }
+}
+
+.contact-detail {
+  color:   var(--text);
+  outline: none;
+  flex:    1;
+  padding: 1px 0;
+  @include editable-focus;
+}
+
+// ════════════════════════════════════════════════════
+//  ADD / DELETE CONTROLS
+// ════════════════════════════════════════════════════
+.add-card-tile,
+.add-contact-tile {
+  background:    transparent;
+  border:        1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  @include flex-center;
+  min-height:    80px;
+  cursor:        pointer;
+  color:         var(--muted);
+  font-size:     13px;
+  transition:    all 0.2s;
+
+  &:hover {
+    border-color: var(--accent);
+    color:        var(--accent);
+    background:   var(--accent-dim);
+  }
+}
+
+.add-card-inner { pointer-events: none; }
+
+.add-section-row {
+  display:         flex;
+  justify-content: center;
+  margin:          1rem 0 3rem;
+}
+
+.btn-add-section {
+  padding:       10px 24px;
+  background:    var(--card);
+  border:        1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color:         var(--muted);
+  font-size:     13px;
+  cursor:        pointer;
+  transition:    all 0.2s;
+
+  &:hover {
+    border-color: var(--accent);
+    color:        var(--accent);
+    background:   var(--accent-dim);
+  }
+}
+
+.add-field-row { margin-top: 4px; }
+
+.btn-add-field {
+  background: none;
+  border:     none;
+  color:      var(--muted);
+  font-size:  12px;
+  cursor:     pointer;
+  padding:    2px 0;
+  transition: color 0.15s;
+
+  &:hover { color: var(--accent); }
+}
+
+.btn-icon {
+  width:         22px;
+  height:        22px;
+  background:    none;
+  border:        none;
+  color:         var(--muted);
+  cursor:        pointer;
+  font-size:     11px;
+  border-radius: 4px;
+  @include flex-center;
+  transition:    all 0.15s;
+  flex-shrink:   0;
+  opacity:       0;
+
+  &:hover {
+    background: var(--red-dim);
+    color:      var(--red);
+  }
+}
+
+// ════════════════════════════════════════════════════
+//  COLOUR PICKER DOTS
+// ════════════════════════════════════════════════════
+.color-picker {
+  @include flex-row(4px);
+  opacity:    0;
+  transition: opacity 0.2s;
+}
+
+.cdot {
+  width:         10px;
+  height:        10px;
+  border-radius: 50%;
+  cursor:        pointer;
+  flex-shrink:   0;
+  transition:    transform 0.15s;
+
+  &:hover  { transform: scale(1.4); }
+  &.active { outline: 2px solid rgba(255, 255, 255, 0.8); outline-offset: 1px; }
+}
+
+// ════════════════════════════════════════════════════
+//  VAULT META FOOTER
+// ════════════════════════════════════════════════════
+.vault-meta {
+  text-align:   center;
+  color:        var(--muted);
+  font-size:    12px;
+  margin-top:   3rem;
+  padding-top:  2rem;
+  border-top:   1px solid var(--border);
+
+  strong {
+    outline: none;
+    &:focus { color: var(--accent); }
+  }
+}
+
+// ════════════════════════════════════════════════════
+//  TOAST NOTIFICATION
+// ════════════════════════════════════════════════════
+.toast {
+  position:      fixed;
+  bottom:        1.5rem;
+  left:          50%;
+  transform:     translateX(-50%) translateY(80px);
+  background:    var(--surface);
+  border:        1px solid var(--border);
+  border-radius: 10px;
+  padding:       10px 20px;
+  font-size:     13px;
+  color:         var(--text);
+  opacity:       0;
+  transition:    all 0.3s;
+  pointer-events: none;
+  white-space:   nowrap;
+  z-index:       9999;
+
+  &.show    { opacity: 1; transform: translateX(-50%) translateY(0); }
+  &.error   { border-color: rgba(255, 92, 92, 0.4);  background: var(--red-dim);   color: var(--red);   }
+  &.success { border-color: rgba(62, 207, 142, 0.4); background: var(--green-dim); color: var(--green); }
+}
+
+// ════════════════════════════════════════════════════
+//  PRINT
+// ════════════════════════════════════════════════════
+@media print {
+  body {
+    background: white;
+    color:      #111;
+    font-size:  11px;
+  }
+
+  header,
+  .header-actions,
+  #lock-screen,
+  .btn-sm,
+  .btn-icon,
+  .add-card-tile,
+  .add-contact-tile,
+  .add-section-row,
+  .add-field-row,
+  .instructions,
+  .color-picker,
+  .contact-detail-row .btn-icon,
+  .card-actions { display: none !important; }
+
+  .emergency-banner {
+    background:   #fff3f3;
+    border-color: #ffcccc;
+
+    h3 { color: #cc0000; }
+  }
+
+  .cred-card,
+  .contact-card {
+    break-inside: avoid;
+    border:       1px solid #ddd;
+    background:   #fafafa;
+  }
+
+  .field-value {
+    background: #f0f0f0;
+    color:      #111;
+
+    &.highlight { background: #e8ecff; color: #2244aa; }
+  }
+
+  .section-header { border-bottom-color: #ccc; }
+
+  :root {
+    --muted: #555;
+    --text:  #111;
+  }
+}
+
+// ════════════════════════════════════════════════════
+//  ADD MEMBER MODAL
+// ════════════════════════════════════════════════════
+.modal-overlay {
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index:         500;
+  @include flex-center;
+  padding:         1.5rem;
+}
+
+.modal-box {
+  background:    var(--surface);
+  border:        1px solid var(--border-hover);
+  border-radius: 20px;
+  width:         100%;
+  max-width:     440px;
+  box-shadow:    0 24px 64px rgba(0, 0, 0, 0.5);
+  animation:     modal-in 0.2s ease;
+  overflow:      hidden;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+.modal-header {
+  @include flex-row;
+  justify-content: space-between;
+  padding:         1.25rem 1.5rem 1rem;
+  border-bottom:   1px solid var(--border);
+
+  h2 { font-size: 16px; font-weight: 600; }
+}
+
+.modal-close {
+  background:    none;
+  border:        none;
+  color:         var(--muted);
+  font-size:     18px;
+  cursor:        pointer;
+  width:         28px;
+  height:        28px;
+  @include flex-center;
+  border-radius: 6px;
+  transition:    background 0.15s, color 0.15s;
+
+  &:hover { background: var(--red-dim); color: var(--red); }
+}
+
+.modal-body {
+  padding:        1.25rem 1.5rem;
+  display:        flex;
+  flex-direction: column;
+  gap:            1rem;
+}
+
+.modal-footer {
+  @include flex-row;
+  justify-content: flex-end;
+  padding:         1rem 1.5rem 1.25rem;
+  border-top:      1px solid var(--border);
+}
+
+// ── Form groups ──────────────────────────────────────
+.form-group {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+
+  label {
+    font-size:   13px;
+    font-weight: 500;
+    color:       var(--text);
+  }
+
+  input[type="text"],
+  input[type="tel"],
+  input[type="password"] {
+    width:         100%;
+    padding:       10px 14px;
+    background:    var(--card);
+    border:        1px solid var(--border);
+    border-radius: 9px;
+    color:         var(--text);
+    font-size:     14px;
+    outline:       none;
+    transition:    border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      border-color: var(--accent);
+      box-shadow:   0 0 0 3px var(--accent-dim);
+    }
+  }
+}
+
+.avatar-row {
+  flex-direction: row !important;
+  align-items:    center;
+  gap:            12px !important;
+
+  label { margin: 0; flex-shrink: 0; }
+}
+
+.input-emoji {
+  width:      56px !important;
+  text-align: center;
+  font-size:  22px !important;
+  padding:    7px 4px !important;
+}
+
+.input-prefix-wrap {
+  @include flex-row(0);
+  background:    var(--card);
+  border:        1px solid var(--border);
+  border-radius: 9px;
+  overflow:      hidden;
+  transition:    border-color 0.2s, box-shadow 0.2s;
+
+  &:focus-within {
+    border-color: var(--accent);
+    box-shadow:   0 0 0 3px var(--accent-dim);
+  }
+
+  input[type="tel"] {
+    border:        none !important;
+    border-radius: 0 !important;
+    box-shadow:    none !important;
+    background:    transparent !important;
+    flex:          1;
+  }
+}
+
+.input-prefix {
+  padding:      0 12px;
+  font-size:    13px;
+  color:        var(--muted);
+  border-right: 1px solid var(--border);
+  white-space:  nowrap;
+  height:       40px;
+  @include flex-center;
+  flex-shrink:  0;
+}
+
+.form-hint  { font-size: 11px; color: var(--muted); line-height: 1.5; }
+.field-error { font-size: 11px; color: var(--red); min-height: 14px; }
+.required   { color: var(--red); margin-left: 2px; }
+
+// ── Modal buttons ────────────────────────────────────
+.btn-modal-cancel {
+  padding:       9px 20px;
+  border-radius: 9px;
+  font-size:     14px;
+  font-weight:   500;
+  cursor:        pointer;
+  border:        1px solid var(--border);
+  background:    var(--card);
+  color:         var(--muted);
+  transition:    background 0.15s, color 0.15s;
+
+  &:hover { background: var(--border-hover); color: var(--text); }
+}
+
+.btn-modal-submit {
+  padding:       9px 24px;
+  border-radius: 9px;
+  font-size:     14px;
+  font-weight:   600;
+  cursor:        pointer;
+  border:        none;
+  background:    var(--accent);
+  color:         #fff;
+  transition:    opacity 0.15s;
+
+  &:hover { opacity: 0.88; }
+}

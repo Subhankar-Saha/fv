@@ -1,0 +1,391 @@
+{
+  "config": {
+    "password": "family2024",
+    "title": "Family Credentials Vault",
+    "subtitle": "Keep this file safe. Do not share digitally.",
+    "emergencyMessage": "This document contains all important credentials, accounts, and contact information. If you are reading this, please contact our family's financial advisor and lawyer first. Keep this document strictly private."
+  },
+  "meta": {
+    "lastUpdated": "Click to edit date",
+    "createdBy": "Your Name"
+  },
+  "sections": [
+    {
+      "id": "identity",
+      "title": "Identity Documents",
+      "icon": "🪪",
+      "color": "accent",
+      "cards": [
+        {
+          "id": "aadhaar",
+          "name": "Aadhaar Card",
+          "type": "UIDAI — Biometric ID",
+          "icon": "🪪",
+          "color": "amber",
+          "fields": [
+            { "label": "Full Name",   "value": "ENTER YOUR NAME",       "highlight": false },
+            { "label": "Aadhaar No.", "value": "XXXX XXXX XXXX",        "highlight": true  },
+            { "label": "DOB",         "value": "DD/MM/YYYY",            "highlight": false },
+            { "label": "VID",         "value": "Virtual ID if any",     "highlight": false },
+            { "label": "Location",    "value": "Where original is kept","highlight": false }
+          ]
+        },
+        {
+          "id": "pan",
+          "name": "PAN Card",
+          "type": "Income Tax — Tax ID",
+          "icon": "📋",
+          "color": "green",
+          "fields": [
+            { "label": "Full Name",    "value": "AS ON PAN CARD",        "highlight": false },
+            { "label": "PAN Number",   "value": "ABCDE1234F",            "highlight": true  },
+            { "label": "DOB",          "value": "DD/MM/YYYY",            "highlight": false },
+            { "label": "Father's Name","value": "Enter name",            "highlight": false },
+            { "label": "Location",     "value": "Where original is kept","highlight": false }
+          ]
+        },
+        {
+          "id": "voter",
+          "name": "Voter ID Card",
+          "type": "Election Commission",
+          "icon": "🗳️",
+          "color": "teal",
+          "fields": [
+            { "label": "Full Name",    "value": "AS ON VOTER ID",        "highlight": false },
+            { "label": "Voter ID No.", "value": "ABC1234567",            "highlight": true  },
+            { "label": "Serial No.",   "value": "Enter serial",          "highlight": false },
+            { "label": "Constituency", "value": "Enter constituency",    "highlight": false },
+            { "label": "Location",     "value": "Where original is kept","highlight": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bank",
+      "title": "Bank Accounts",
+      "icon": "🏦",
+      "color": "green",
+      "cards": [
+        {
+          "id": "bank1",
+          "name": "Bank Name (e.g. SBI)",
+          "type": "Savings Account",
+          "icon": "🏦",
+          "color": "green",
+          "fields": [
+            { "label": "Account No.",   "value": "XXXXXXXXXX",            "highlight": true  },
+            { "label": "IFSC Code",     "value": "XXXXXXX0000",           "highlight": false },
+            { "label": "Branch",        "value": "Branch name & city",    "highlight": false },
+            { "label": "Net Banking ID","value": "Username/CIF",          "highlight": false },
+            { "label": "Password",      "value": "Net banking password",  "highlight": true  },
+            { "label": "Mobile PIN",    "value": "App PIN",               "highlight": false },
+            { "label": "Linked Mobile", "value": "+91 XXXXXXXXXX",        "highlight": false },
+            { "label": "Nominee",       "value": "Nominee name",          "highlight": false }
+          ]
+        },
+        {
+          "id": "bank2",
+          "name": "Bank Name 2",
+          "type": "Savings / Current Account",
+          "icon": "🏦",
+          "color": "green",
+          "fields": [
+            { "label": "Account No.",   "value": "XXXXXXXXXX",      "highlight": true  },
+            { "label": "IFSC Code",     "value": "XXXXXXX0000",     "highlight": false },
+            { "label": "Net Banking ID","value": "Username",        "highlight": false },
+            { "label": "Password",      "value": "Password",        "highlight": true  },
+            { "label": "Linked Mobile", "value": "+91 XXXXXXXXXX",  "highlight": false },
+            { "label": "Nominee",       "value": "Nominee name",    "highlight": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cards",
+      "title": "ATM / Debit & Credit Cards",
+      "icon": "💳",
+      "color": "amber",
+      "cards": [
+        {
+          "id": "debit1",
+          "name": "Bank Name — Debit Card",
+          "type": "ATM / Debit Card",
+          "icon": "💳",
+          "color": "amber",
+          "fields": [
+            { "label": "Card Number",  "value": "XXXX XXXX XXXX XXXX", "highlight": true  },
+            { "label": "Expiry",       "value": "MM/YY",               "highlight": false },
+            { "label": "CVV",          "value": "XXX",                 "highlight": true  },
+            { "label": "ATM PIN",      "value": "XXXX",                "highlight": true  },
+            { "label": "Name on Card", "value": "Name as on card",     "highlight": false }
+          ]
+        },
+        {
+          "id": "credit1",
+          "name": "Bank/Issuer — Credit Card",
+          "type": "Credit Card",
+          "icon": "💳",
+          "color": "red",
+          "fields": [
+            { "label": "Card Number",   "value": "XXXX XXXX XXXX XXXX", "highlight": true  },
+            { "label": "Expiry",        "value": "MM/YY",               "highlight": false },
+            { "label": "CVV",           "value": "XXX",                 "highlight": true  },
+            { "label": "PIN",           "value": "XXXX",                "highlight": true  },
+            { "label": "Credit Limit",  "value": "₹ amount",            "highlight": false },
+            { "label": "Bill Date",     "value": "Billing cycle date",  "highlight": false },
+            { "label": "Customer Care", "value": "Phone number",        "highlight": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "investments",
+      "title": "Investments — Demat, Zerodha, Mutual Funds",
+      "icon": "📈",
+      "color": "teal",
+      "cards": [
+        {
+          "id": "zerodha",
+          "name": "Zerodha",
+          "type": "Stock Broker — Demat Account",
+          "icon": "📊",
+          "color": "teal",
+          "fields": [
+            { "label": "Client ID",    "value": "ABXXXX (User ID)",          "highlight": true  },
+            { "label": "Password",     "value": "Kite login password",        "highlight": true  },
+            { "label": "TOTP Key",     "value": "2FA secret key or app",      "highlight": false },
+            { "label": "DP ID",        "value": "Depository participant ID",  "highlight": false },
+            { "label": "Demat Acc No.","value": "16-digit DP account",        "highlight": false },
+            { "label": "Linked Bank",  "value": "Bank linked for payout",     "highlight": false },
+            { "label": "Nominee",      "value": "Nominee name",               "highlight": false }
+          ]
+        },
+        {
+          "id": "mf-central",
+          "name": "MF Central",
+          "type": "Mutual Fund — CAMS/KFintech",
+          "icon": "🏛️",
+          "color": "purple",
+          "fields": [
+            { "label": "Folio Numbers","value": "Enter all folio nos.",  "highlight": true  },
+            { "label": "Login Email",  "value": "Registered email",      "highlight": false },
+            { "label": "Password",     "value": "MF Central password",   "highlight": true  },
+            { "label": "Linked PAN",   "value": "PAN used for MF",       "highlight": false },
+            { "label": "Nominee",      "value": "Nominee name",          "highlight": false },
+            { "label": "AMCs Invested","value": "List of fund houses",   "highlight": false }
+          ]
+        },
+        {
+          "id": "other-demat",
+          "name": "Other Demat / Broker",
+          "type": "Broker / Depository",
+          "icon": "📂",
+          "color": "teal",
+          "fields": [
+            { "label": "Client ID",  "value": "User ID",           "highlight": true  },
+            { "label": "Password",   "value": "Login password",    "highlight": true  },
+            { "label": "Demat Acc.", "value": "DP account number", "highlight": false },
+            { "label": "Nominee",    "value": "Nominee name",      "highlight": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "insurance",
+      "title": "Insurance Policies",
+      "icon": "🛡️",
+      "color": "red",
+      "cards": [
+        {
+          "id": "life-ins",
+          "name": "Life Insurance Company",
+          "type": "Life Insurance Policy",
+          "icon": "❤️",
+          "color": "red",
+          "fields": [
+            { "label": "Policy No.",   "value": "Policy number",              "highlight": true  },
+            { "label": "Plan Name",    "value": "Plan / product name",        "highlight": false },
+            { "label": "Sum Assured",  "value": "₹ coverage amount",          "highlight": false },
+            { "label": "Premium",      "value": "₹ amount / frequency",       "highlight": false },
+            { "label": "Premium Due",  "value": "Next due date",              "highlight": false },
+            { "label": "Maturity Date","value": "Policy end date",            "highlight": false },
+            { "label": "Nominee",      "value": "Nominee name & relation",    "highlight": true  },
+            { "label": "Agent Name",   "value": "Agent name & phone",         "highlight": false },
+            { "label": "Login",        "value": "Portal username",            "highlight": false },
+            { "label": "Password",     "value": "Portal password",            "highlight": true  },
+            { "label": "Document",     "value": "Where original policy is kept","highlight": false }
+          ]
+        },
+        {
+          "id": "health-ins",
+          "name": "Health Insurance Company",
+          "type": "Health / Mediclaim Policy",
+          "icon": "🏥",
+          "color": "accent",
+          "fields": [
+            { "label": "Policy No.",     "value": "Policy number",             "highlight": true  },
+            { "label": "Plan Name",      "value": "Plan name",                 "highlight": false },
+            { "label": "Cover Amount",   "value": "₹ coverage",               "highlight": false },
+            { "label": "Members",        "value": "Names of all insured",      "highlight": false },
+            { "label": "Cashless Hosp.", "value": "Network hospitals nearby",  "highlight": false },
+            { "label": "TPA Name",       "value": "TPA / admin company",       "highlight": false },
+            { "label": "Health Card No.","value": "Card number if any",        "highlight": true  },
+            { "label": "Renewal Date",   "value": "Renewal due date",          "highlight": false },
+            { "label": "Helpline",       "value": "24/7 claim helpline no.",   "highlight": false },
+            { "label": "Login",          "value": "Portal username",           "highlight": false },
+            { "label": "Password",       "value": "Portal password",           "highlight": true  }
+          ]
+        },
+        {
+          "id": "vehicle-ins",
+          "name": "Vehicle / Other Insurance",
+          "type": "Other Insurance Policy",
+          "icon": "🚗",
+          "color": "amber",
+          "fields": [
+            { "label": "Policy No.",   "value": "Policy number",        "highlight": true  },
+            { "label": "Type",         "value": "Vehicle / Term / Other","highlight": false },
+            { "label": "Sum Assured",  "value": "₹ coverage",           "highlight": false },
+            { "label": "Renewal Date", "value": "Due date",             "highlight": false },
+            { "label": "Nominee",      "value": "Nominee name",         "highlight": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "email",
+      "title": "Email & Digital Accounts",
+      "icon": "📧",
+      "color": "pink",
+      "cards": [
+        {
+          "id": "gmail",
+          "name": "Gmail — Primary",
+          "type": "Google Account",
+          "icon": "📧",
+          "color": "red",
+          "fields": [
+            { "label": "Email",          "value": "yourname@gmail.com",        "highlight": true  },
+            { "label": "Password",       "value": "Google account password",   "highlight": true  },
+            { "label": "Recovery Email", "value": "Backup email",              "highlight": false },
+            { "label": "Recovery Phone", "value": "+91 XXXXXXXXXX",            "highlight": false },
+            { "label": "2FA",            "value": "Authenticator app / SMS",   "highlight": false },
+            { "label": "Backup Codes",   "value": "Store backup codes here",   "highlight": false }
+          ]
+        },
+        {
+          "id": "email2",
+          "name": "Email 2 / Other",
+          "type": "Email Account",
+          "icon": "📧",
+          "color": "accent",
+          "fields": [
+            { "label": "Email",   "value": "email@domain.com",              "highlight": true  },
+            { "label": "Password","value": "Password",                      "highlight": true  },
+            { "label": "Purpose", "value": "What this account is used for", "highlight": false }
+          ]
+        },
+        {
+          "id": "github",
+          "name": "GitHub",
+          "type": "Code Repository",
+          "icon": "💻",
+          "color": "muted",
+          "fields": [
+            { "label": "Username",        "value": "github-username",     "highlight": true  },
+            { "label": "Email",           "value": "Linked email",        "highlight": false },
+            { "label": "Password",        "value": "GitHub password",     "highlight": true  },
+            { "label": "2FA",             "value": "Authenticator / SMS", "highlight": false },
+            { "label": "Important Repos", "value": "List key repos if any","highlight": false }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "devices",
+      "title": "Phone & Device Access",
+      "icon": "📱",
+      "color": "purple",
+      "cards": [
+        {
+          "id": "phone1",
+          "name": "Primary Smartphone",
+          "type": "Mobile Device",
+          "icon": "📱",
+          "color": "purple",
+          "fields": [
+            { "label": "Mobile No.",      "value": "+91 XXXXXXXXXX",      "highlight": true  },
+            { "label": "Screen Lock PIN", "value": "Device unlock PIN",   "highlight": true  },
+            { "label": "SIM PIN",         "value": "SIM card PIN if set", "highlight": false },
+            { "label": "IMEI",            "value": "15-digit IMEI number","highlight": false },
+            { "label": "Network",         "value": "Airtel / Jio / Vi",   "highlight": false },
+            { "label": "Google/Apple ID", "value": "Linked account",      "highlight": false }
+          ]
+        },
+        {
+          "id": "laptop1",
+          "name": "Laptop / Computer",
+          "type": "PC / Laptop",
+          "icon": "💻",
+          "color": "purple",
+          "fields": [
+            { "label": "Login PIN",      "value": "Windows/Mac login PIN",    "highlight": true  },
+            { "label": "Password",       "value": "Full password",            "highlight": true  },
+            { "label": "Important Files","value": "Where key files are stored","highlight": false }
+          ]
+        }
+      ]
+    }
+  ],
+  "contacts": [
+    {
+      "id": "c1",
+      "name": "Financial Advisor / CA",
+      "role": "For investments & tax matters",
+      "details": ["📞 +91 XXXXXXXXXX", "📧 email@domain.com"]
+    },
+    {
+      "id": "c2",
+      "name": "Insurance Agent",
+      "role": "For claim filing & policy",
+      "details": ["📞 +91 XXXXXXXXXX", "Company name"]
+    },
+    {
+      "id": "c3",
+      "name": "Lawyer / Advocate",
+      "role": "For legal & property matters",
+      "details": ["📞 +91 XXXXXXXXXX", "📧 email@domain.com"]
+    },
+    {
+      "id": "c4",
+      "name": "Trusted Friend / Family",
+      "role": "Emergency contact who knows the situation",
+      "details": ["📞 +91 XXXXXXXXXX", "Relation: ____________"]
+    },
+    {
+      "id": "c5",
+      "name": "Primary Bank Manager",
+      "role": "Main bank relationship manager",
+      "details": ["📞 +91 XXXXXXXXXX", "Bank: ____________"]
+    },
+    {
+      "id": "c6",
+      "name": "Zerodha Support",
+      "role": "For demat account matters",
+      "details": ["📞 080-40402020", "🌐 support.zerodha.com"]
+    }
+  ],
+  "notes": [
+    { "label": "Will / Nominations",    "value": "Location of will document",                   "highlight": false },
+    { "label": "Bank Locker",           "value": "Bank name, locker no., key location",          "highlight": false },
+    { "label": "Property / Land",       "value": "Property details, document location",          "highlight": false },
+    { "label": "Provident Fund",        "value": "PF / EPFO account number, UAN",               "highlight": true  },
+    { "label": "PPF Account",           "value": "PPF account no., bank, maturity date",         "highlight": false },
+    { "label": "Fixed Deposits",        "value": "FD details, banks, amounts, maturity",         "highlight": false },
+    { "label": "Gold / Jewellery",      "value": "Location and description",                     "highlight": false },
+    { "label": "Vehicle RC / Insurance","value": "Vehicle reg. no., document location",          "highlight": false },
+    { "label": "Any Loans",             "value": "Home loan, car loan — bank, EMI details",      "highlight": false },
+    { "label": "Password Manager",      "value": "If using 1Password/Bitwarden — master password","highlight": false },
+    { "label": "Other Notes",           "value": "Anything else family must know",               "highlight": false }
+  ]
+}

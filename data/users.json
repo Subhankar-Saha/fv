@@ -1,0 +1,11 @@
+{
+  "users": [
+    {
+      "id": "family",
+      "displayName": "Family Vault",
+      "avatar": "👨‍👩‍👧‍👦",
+      "password": "family2024",
+      "dataFile": "data/vault-family.json"
+    }
+  ]
+}
