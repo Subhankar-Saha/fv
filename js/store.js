@@ -22,14 +22,24 @@ export const getContact = ci        => _vault?.contacts?.find(c => c.id === ci);
 // ── LOAD USER VAULT FROM FIRESTORE ────────────────────
 export async function loadUserVault(user) {
   _currentUser = user;
-  try {
-    const snap = await getDoc(doc(db, 'vaults', user.mobile));
-    _vault = snap.exists() ? snap.data() : _emptyVault(user);
-    if (!snap.exists()) await _persistVault();
-  } catch (e) {
-    console.error('loadUserVault:', e);
-    _vault = _emptyVault(user);
-    showToast('Offline mode — edits will sync when online', 'error');
+  const ref = doc(db, 'vaults', user.mobile);
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const snap = await getDoc(ref);
+      _vault = snap.exists() ? snap.data() : _emptyVault(user);
+      if (!snap.exists()) await _persistVault();
+      return;
+    } catch (e) {
+      if (attempt === 0 && e.code === 'unavailable') {
+        await new Promise(r => setTimeout(r, 1500));
+        continue;
+      }
+      console.error('loadUserVault:', e);
+      _vault = _emptyVault(user);
+      showToast('Offline — edits will sync when online', 'error');
+      return;
+    }
   }
 }
 
