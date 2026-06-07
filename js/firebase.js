@@ -12,7 +12,7 @@ const firebaseConfig = {
   messagingSenderId: '__FIREBASE_MESSAGING_SENDER_ID__',
   appId:             '__FIREBASE_APP_ID__',
 };
-
+ 
 const app = initializeApp(firebaseConfig);
 
 // persistentLocalCache → offline support via IndexedDB
