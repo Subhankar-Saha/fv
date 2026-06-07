@@ -19,8 +19,10 @@ async function hashPwd(pwd) {
 
 // ── LOAD USERS FROM FIRESTORE ─────────────────────────
 export async function loadUsers() {
-  const grid = document.getElementById('user-grid');
-  if (grid) grid.innerHTML = `<p class="no-users">Loading members…</p>`;
+  const grid    = document.getElementById('user-grid');
+  const spinner = document.getElementById('app-spinner');
+  const lock    = document.getElementById('lock-screen');
+
   try {
     const snap = await getDocs(collection(db, 'users'));
     _users = snap.docs.map(d => d.data());
@@ -28,7 +30,9 @@ export async function loadUsers() {
     console.error('loadUsers:', e);
     _users = [];
     if (grid) grid.innerHTML = `<p class="no-users">Could not load — check internet connection.</p>`;
-    return;
+  } finally {
+    if (spinner) spinner.style.display = 'none';
+    if (lock)    lock.style.display    = 'flex';
   }
   _renderUserGrid();
 }
